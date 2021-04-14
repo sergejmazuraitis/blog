@@ -21,5 +21,6 @@ public class Post {
 
     private String description;
 
+    @Column(columnDefinition = "VARCHAR(1000)")
     private String content;
 }
