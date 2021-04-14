@@ -2,10 +2,12 @@ package lt.codeacademy.project.blog.service;
 
 import lt.codeacademy.project.blog.model.Post;
 import lt.codeacademy.project.blog.repository.PostRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 

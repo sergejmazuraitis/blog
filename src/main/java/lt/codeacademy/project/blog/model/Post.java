@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -23,4 +24,8 @@ public class Post {
 
     @Column(columnDefinition = "VARCHAR(1000)")
     private String content;
+
+    private Date date;
+
+    private String category;
 }
