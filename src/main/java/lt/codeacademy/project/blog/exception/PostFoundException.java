@@ -1,4 +1,4 @@
-package lt.codeacademy.project.blog.service;
+package lt.codeacademy.project.blog.exception;
 
 public class PostFoundException extends RuntimeException{
 }

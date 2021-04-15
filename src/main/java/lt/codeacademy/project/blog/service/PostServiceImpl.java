@@ -1,5 +1,6 @@
 package lt.codeacademy.project.blog.service;
 
+import lt.codeacademy.project.blog.exception.PostFoundException;
 import lt.codeacademy.project.blog.model.Post;
 import lt.codeacademy.project.blog.repository.PostRepository;
 import org.springframework.stereotype.Service;

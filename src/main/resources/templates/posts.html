@@ -103,7 +103,7 @@
 <div class="container">
     <div class="row">
         <div class="col-2">
-            <ul class="list-group">
+            <ul class="list-group mt-3">
                 <li class="list-group-item active" aria-current="true">An active item</li>
                 <li class="list-group-item">A second item</li>
                 <li class="list-group-item">A third item</li>
@@ -114,8 +114,8 @@
         </div>
 
         <div class="col-7">
-            <div class="card text-center">
-                <div class="card" th:each="post: ${postsPage}">
+            <div class="card text-center mt-3" th:each="post: ${postsPage}">
+                <div class="card">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${post.name}">Special title treatment</h5>
                         <p class="card-text" th:text="${post.description}">With supporting text below as a natural
