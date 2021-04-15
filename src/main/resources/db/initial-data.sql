@@ -1,4 +1,4 @@
-INSERT INTO POST (id, name, description, content) VALUES
+INSERT INTO POST (id, name, description, content, category, date ) VALUES
 ('30ae6b63-1e7b-4c55-95f8-1356040908c6',
  'First',
  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae.',
@@ -10,7 +10,9 @@ INSERT INTO POST (id, name, description, content) VALUES
  ' Nunc semper pellentesque tincidunt. Pellentesque at tristique risus. Nulla maximus elit eu augue sollicitudin,' ||
  ' vel fringilla nunc convallis. Cras suscipit libero non ligula iaculis bibendum. ' ||
  'Vivamus non bibendum lacus, quis pulvinar neque. Aenean eu urna risus. Duis id turpis lorem.' ||
- ' Nam fringilla fermentum est nec ultrices. Donec.'),
+ ' Nam fringilla fermentum est nec ultrices. Donec.',
+ 'Sport',
+ '2020-12-12'),
 ('6f01fb72-fb5e-49a3-bec1-fdf8319d6b70',
  'Second',
  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae.',
@@ -22,7 +24,9 @@ INSERT INTO POST (id, name, description, content) VALUES
  ' Nunc semper pellentesque tincidunt. Pellentesque at tristique risus. Nulla maximus elit eu augue sollicitudin,' ||
  ' vel fringilla nunc convallis. Cras suscipit libero non ligula iaculis bibendum. ' ||
  'Vivamus non bibendum lacus, quis pulvinar neque. Aenean eu urna risus. Duis id turpis lorem.' ||
- ' Nam fringilla fermentum est nec ultrices. Donec.'),
+ ' Nam fringilla fermentum est nec ultrices. Donec.',
+ 'Art',
+ '2021-01-25'),
 ('94b48b87-9445-4bab-a557-9569f2de0729',
  'Third',
  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae.',
@@ -34,4 +38,6 @@ INSERT INTO POST (id, name, description, content) VALUES
  ' Nunc semper pellentesque tincidunt. Pellentesque at tristique risus. Nulla maximus elit eu augue sollicitudin,' ||
  ' vel fringilla nunc convallis. Cras suscipit libero non ligula iaculis bibendum. ' ||
  'Vivamus non bibendum lacus, quis pulvinar neque. Aenean eu urna risus. Duis id turpis lorem.' ||
- ' Nam fringilla fermentum est nec ultrices. Donec.');
+ ' Nam fringilla fermentum est nec ultrices. Donec.',
+ 'Cars',
+ '2021-02-03');
