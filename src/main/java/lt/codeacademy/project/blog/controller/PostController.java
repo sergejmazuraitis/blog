@@ -3,6 +3,8 @@ package lt.codeacademy.project.blog.controller;
 import lt.codeacademy.project.blog.model.Post;
 import lt.codeacademy.project.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +31,8 @@ public class PostController {
     }
 
     @GetMapping
-    public String getPosts(Model model){
-        model.addAttribute("postsPage", postService.getPosts());
+    public String getPosts(@PageableDefault(size = 5) Pageable pageable, Model model){
+        model.addAttribute("postsPage", postService.getAllPostsWithPages(pageable));
         return "posts";
     }
 

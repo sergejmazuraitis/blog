@@ -3,6 +3,8 @@ package lt.codeacademy.project.blog.service;
 import lt.codeacademy.project.blog.exception.PostFoundException;
 import lt.codeacademy.project.blog.model.Post;
 import lt.codeacademy.project.blog.repository.PostRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,8 +34,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getPosts() {
-        return postRepository.findAll();
+    public Page<Post> getAllPostsWithPages(Pageable pageable) {
+        return postRepository.findAll(pageable);
     }
 
     @Override

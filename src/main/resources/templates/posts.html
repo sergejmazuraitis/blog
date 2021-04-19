@@ -115,7 +115,7 @@
 
         <div class="col-7">
             <div class="card text-center mt-3" th:each="post: ${postsPage}">
-                <div class="card">
+                <div class="card m-2">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${post.name}">Special title treatment</h5>
                         <p class="card-text" th:text="${post.description}">With supporting text below as a natural
@@ -125,6 +125,33 @@
                     </div>
                 </div>
             </div>
+
+            <div>
+                <ul class="pagination my-3 mx-auto">
+                    <li class="page-item"
+                        th:classappend="${postsPage.number eq 0 ? 'disabled' : ''}">
+                        <a class="page-link"
+                           th:href="@{/posts(page=${postsPage.number} - 1)}"
+                           >Previous</a>
+                    </li>
+
+                    <li class="page-item"
+                        th:each="pageNumber : ${#numbers.sequence(0, postsPage.totalPages - 1)}"
+                        th:classappend="${pageNumber eq postsPage.number ? 'active' : ''}">
+                        <a class="page-link" th:href="@{/posts(page=${pageNumber})}" th:text="${pageNumber} + 1">1</a>
+                    </li>
+
+                    <li class="page-item"
+                        th:classappend="${postsPage.number eq postsPage.totalPages - 1 ? 'disabled' : ''}">
+                        <a class="page-link"
+                           th:href="@{/posts(page=${postsPage.number} + 1)}"
+                           >Next</a>
+                    </li>
+                </ul>
+
+<!--                <span th:text="#{products.total(${productsPage.totalElements})}">Total: 100</span>-->
+            </div>
+
 
         </div>
         <div class="col-3">
