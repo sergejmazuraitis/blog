@@ -1,7 +1,7 @@
 package lt.codeacademy.project.blog.controller;
 
 import lt.codeacademy.project.blog.model.Post;
-import lt.codeacademy.project.blog.service.PostService;
+import lt.codeacademy.project.blog.service.MyPostService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -17,9 +17,9 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/posts")
 public class PostController {
-    private final PostService postService;
+    private final MyPostService postService;
 
-    public PostController(@Qualifier("postServiceImpl") PostService postService) {
+    public PostController(@Qualifier("postServiceImpl") MyPostService postService) {
         this.postService = postService;
     }
 

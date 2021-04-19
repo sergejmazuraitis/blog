@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;
 
-public interface PostService {
+public interface MyPostService {
     void addPost(Post post);
 
     Post getPostById(UUID id);
