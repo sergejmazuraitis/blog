@@ -4,13 +4,14 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "Comment")
-public class Comment {
+@Table(name = "comments")
+public class Comment implements Serializable {
 
     @Id
     @GeneratedValue
@@ -24,5 +25,7 @@ public class Comment {
 
     private String content;
 
-//    private BlogPost post;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "blogPost_id", nullable = false)
+    private BlogPost blogPost;
 }

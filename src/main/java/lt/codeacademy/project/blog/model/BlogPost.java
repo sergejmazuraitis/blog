@@ -5,6 +5,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -28,4 +29,8 @@ public class BlogPost {
     private Date date;
 
     private String category;
+
+    @OneToMany(mappedBy = "blogPost", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Comment> comment;
 }
