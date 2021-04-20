@@ -9,8 +9,8 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "Post")
-public class Post {
+@Table(name = "BLOGPOST")
+public class BlogPost {
 
     @Id
     @GeneratedValue

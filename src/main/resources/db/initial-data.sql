@@ -1,4 +1,4 @@
-INSERT INTO POST (id, name, description, content, category, date ) VALUES
+INSERT INTO BLOGPOST (id, name, description, content, category, date ) VALUES
 ('30ae6b63-1e7b-4c55-95f8-1356040908c6',
  'First',
  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae.',
