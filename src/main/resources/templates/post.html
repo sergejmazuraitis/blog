@@ -12,7 +12,7 @@
 <div class="container my-3">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#" th:text="#{posts.logo}">CA Blog</a>
+            <a class="navbar-brand" th:href="@{/posts}" th:text="#{posts.logo}"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -96,7 +96,6 @@
                         </ul>
                     </li>
                 </ul>
-                \
 
             </div>
         </div>
