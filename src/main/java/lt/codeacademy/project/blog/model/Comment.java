@@ -3,9 +3,10 @@ package lt.codeacademy.project.blog.model;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.UUID;
 
@@ -21,11 +22,18 @@ public class Comment {
     @Type(type = "uuid-char")
     private UUID commentId;
 
+    @NotNull
+    @Size(min = 3,
+            max = 50,
+            message = "{validation.size.name}")
     private String name;
 
-    @CreatedDate
     private Date date = new Date();
 
+    @NotNull
+    @Size(min = 1,
+            max = 250,
+            message = "{validation.size.name}")
     private String content;
 
     @Type(type = "uuid-char")
