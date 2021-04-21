@@ -1,31 +1,33 @@
 package lt.codeacademy.project.blog.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "comments")
-public class Comment implements Serializable {
+public class Comment {
 
     @Id
     @GeneratedValue
     @Column(columnDefinition = "VARCHAR(36)", updatable = false)
     @Type(type = "uuid-char")
-    private UUID id;
+    private UUID commentId;
 
     private String name;
 
-    private Date date;
+    @CreatedDate
+    private Date date = new Date();
 
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "blogPost_id", nullable = false)
-    private BlogPost blogPost;
+    @Type(type = "uuid-char")
+    private UUID blogPostId;
 }

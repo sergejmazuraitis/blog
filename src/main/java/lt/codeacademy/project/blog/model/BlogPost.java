@@ -1,14 +1,18 @@
 package lt.codeacademy.project.blog.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "BLOGPOST")
 public class BlogPost {
@@ -26,11 +30,12 @@ public class BlogPost {
     @Column(columnDefinition = "VARCHAR(1000)")
     private String content;
 
-    private Date date;
+    @CreatedDate
+    private Date date = new Date();
 
     private String category;
 
-    @OneToMany(mappedBy = "blogPost", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private List<Comment> comment;
+//    @OneToMany(mappedBy = "blogPost", fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL)
+//    private List<Comment> comment;
 }

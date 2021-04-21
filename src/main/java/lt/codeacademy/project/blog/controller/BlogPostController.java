@@ -4,6 +4,7 @@ import lt.codeacademy.project.blog.model.BlogPost;
 import lt.codeacademy.project.blog.service.BlogPostService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +32,7 @@ public class BlogPostController {
     }
 
     @GetMapping
-    public String getBlogPosts(@PageableDefault(size = 5) Pageable pageable, Model model){
+    public String getBlogPosts(@PageableDefault(size = 5, sort = {"name"}, direction = Sort.Direction.ASC) Pageable pageable, Model model){
         model.addAttribute("postsPage", blogPostService.getAllBlogPostsWithPages(pageable));
         return "posts";
     }

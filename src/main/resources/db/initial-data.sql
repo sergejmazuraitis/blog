@@ -98,6 +98,6 @@ INSERT INTO BLOGPOST (id, name, description, content, category, date ) VALUES
  'Cars',
  '2021-02-03');
 
-INSERT INTO COMMENTS (id, name, date , content, blog_post_id)
+INSERT INTO COMMENTS (comment_id, name, date , content, blog_post_id)
 VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c64a', 'Vardas', '2021-04-04', 'Bandau irašyti pirmą postą', '30ae6b63-1e7b-4c55-95f8-1356040908c6'),
        ('9f650ee7-da8c-430d-99e5-a771aa98c65a', 'KitasVardas', '2021-04-04', 'Bandau irašyti pirmą postą pakartotinai', '30ae6b63-1e7b-4c55-95f8-1356040908c6');

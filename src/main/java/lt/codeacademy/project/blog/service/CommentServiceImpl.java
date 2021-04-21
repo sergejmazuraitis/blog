@@ -5,9 +5,12 @@ import lt.codeacademy.project.blog.model.Comment;
 import lt.codeacademy.project.blog.repository.CommentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
+@Service
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
@@ -38,5 +41,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteComment(UUID id) {
         commentRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Comment> getCommentsByBlogPostId(UUID id) {
+        return commentRepository.getCommentsByBlogPostId(id);
     }
 }
