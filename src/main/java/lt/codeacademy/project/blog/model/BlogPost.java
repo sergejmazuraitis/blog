@@ -14,7 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "BLOGPOST")
+@Table(name = "blogpost")
 public class BlogPost {
 
     @Id
@@ -30,7 +30,7 @@ public class BlogPost {
     private String name;
 
     @NotNull
-    @Size(min = 1,
+    @Size(min = 3,
             max = 250,
             message = "{validation.size.name}")
     private String description;

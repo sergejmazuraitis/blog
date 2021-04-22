@@ -22,10 +22,10 @@ public class Comment {
     @Type(type = "uuid-char")
     private UUID commentId;
 
-    @NotNull
-    @Size(min = 3,
-            max = 50,
-            message = "{validation.size.name}")
+//    @NotNull
+//    @Size(min = 3,
+//            max = 50,
+//            message = "{validation.size.name}")
     private String name;
 
     private Date date = new Date();
