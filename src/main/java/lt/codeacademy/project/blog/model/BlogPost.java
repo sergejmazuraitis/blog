@@ -24,7 +24,7 @@ public class BlogPost {
     @Type(type = "uuid-char")
     private UUID id;
 
-    @NotBlank
+    @NotNull
     @Size(min = 2,
             max = 50,
             message = "{validation.size.name}")

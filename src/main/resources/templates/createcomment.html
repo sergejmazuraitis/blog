@@ -26,7 +26,8 @@
         </div>
 
         <div class="mb-3">
-            <label for="content" class="form-label" th:text="#{create.content}" th:class="${#fields.hasErrors('content')} ? error"></label>
+            <label for="content" class="form-label" th:text="#{create.content}"
+                   th:class="${#fields.hasErrors('content')} ? error"></label>
             <textarea class="form-control" id="content" rows="15" th:field="*{content}"
                       th:placeholder="#{create.content}" th:errorclass="error"></textarea>
             <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
