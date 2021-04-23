@@ -30,11 +30,11 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" th:text="#{posts.signin}"></a>
+                    <a class="nav-link" th:href="@{/posts/user}" th:text="#{posts.signin}"></a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" th:text="#{posts.register}"></a>
+                    <a class="nav-link" th:href="@{/posts/user}" th:text="#{posts.register}"></a>
                 </li>
 
                 <li th:replace="this :: language"></li>

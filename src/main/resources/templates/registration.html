@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head(title=#{posts.register})"></head>
+<body>
+<div th:insert="fragments/layout :: navbar" class="container"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-5">
+            <form method="post" th:object="${userRegistration}">
+                <div class="mb-3">
+                    <label for="userRegistrationName" class="form-label" th:text="#{create.user.name}"></label>
+                    <input type="text"
+                           class="form-control"
+                           id="userRegistrationName"
+                           th:field="*{name}"
+                           aria-describedby="name"
+                           th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid' : 'form-control'">
+                    <div id="name" class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="userRegistrationSurname" class="form-label" th:text="#{create.user.surname}"></label>
+                    <input type="text" class="form-control" id="userRegistrationSurname" th:field="*{surname}">
+                </div>
+                <div class="mb-3">
+                    <label for="userRegistrationEmail" class="form-label" th:text="#{create.user.email}"></label>
+                    <input type="text" class="form-control" id="userRegistrationEmail" th:field="*{email}">
+                </div>
+                <div class="mb-3">
+                    <label for="userRegistrationPhone" class="form-label" th:text="#{create.user.phone}"></label>
+                    <input type="text"
+                           th:class="${#fields.hasErrors('phone')} ? 'form-control is-invalid' : 'form-control'"
+                           id="userRegistrationPhone"
+                           aria-describedby="phone"
+                           th:field="*{phone}">
+                    <div id="phone" class="invalid-feedback" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="userRegistrationPassword" class="form-label" th:text="#{create.user.password}"></label>
+                    <input type="password"
+                           class="form-control"
+                           th:class="${#fields.hasErrors('global')} ? 'form-control is-invalid' : 'form-control'"
+                           id="userRegistrationPassword"
+                           aria-describedby="password"
+                           th:field="*{password}">
+                    <div id="password" class="invalid-feedback" th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="userRegistrationRepeatPassword" class="form-label" th:text="#{create.user.repeatPassword}"></label>
+                    <input type="password"
+                           class="form-control"
+                           th:class="${#fields.hasErrors('global')} ? 'form-control is-invalid' : 'form-control'"
+                           id="userRegistrationRepeatPassword"
+                           aria-describedby="repeatPassword"
+                           th:field="*{repeatPassword}">
+                    <div id="repeatPassword" class="invalid-feedback" th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></div>
+                </div>
+                <button type="submit" class="btn btn-primary" th:text="#{create.user.submit}"></button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="fragments/layout :: footer" class="bg-light text-center text-lg-start fixed-bottom"></footer>
+
+</body>
+</html>
