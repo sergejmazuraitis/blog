@@ -101,3 +101,7 @@ INSERT INTO BLOGPOST (id, name, description, content, category, date ) VALUES
 INSERT INTO COMMENTS (comment_id, name, date , content, blog_post_id)
 VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c64a', 'Vardas', '2021-04-04', 'Bandau irašyti pirmą postą', '30ae6b63-1e7b-4c55-95f8-1356040908c6'),
        ('9f650ee7-da8c-430d-99e5-a771aa98c65a', 'KitasVardas', '2021-04-04', 'Bandau irašyti pirmą postą pakartotinai', '30ae6b63-1e7b-4c55-95f8-1356040908c6');
+
+INSERT INTO USER (user_id, name, surname, user_name, phone, email, password)
+VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c66a', 'Vardas', 'Vardenis', 'vard', '+37066612345', 'vard@vard.com', 'Vardas123'),
+       ('9f650ee7-da8c-430d-99e5-a771aa98c99a', 'Vardė', 'Vardytė', 'oho', '+37065578945', 'oho@oho.lt', '12345678A');

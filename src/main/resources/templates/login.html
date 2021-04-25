@@ -7,22 +7,22 @@
 <div class="container">
   <div class="row">
     <div class="col-5">
-      <form method="post" th:object="${userRegistration}">
+      <form method="post" th:object="${login}">
         <div class="mb-3">
-          <label for="userRegistrationName" class="form-label" th:text="#{create.user.name}"></label>
+          <label for="loginUsername" class="form-label" th:text="#{user.username}"></label>
           <input type="text"
                  class="form-control"
-                 id="userRegistrationName"
-                 th:field="*{name}"
-                 aria-describedby="name"
-                 th:class="${#fields.hasErrors('name')} ? 'form-control is-invalid' : 'form-control'">
-          <div id="name" class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                 id="loginUsername"
+                 th:field="*{username}"
+                 aria-describedby="username"
+                 th:class="${#fields.hasErrors('username')} ? 'form-control is-invalid' : 'form-control'">
+          <div id="username" class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
         </div>
         <div class="mb-3">
-          <label for="userRegistrationPassword" class="form-label" th:text="#{create.user.password}"></label>
+          <label for="userRegistrationPassword" class="form-label" th:text="#{user.password}"></label>
           <input type="password"
                  class="form-control"
-                 th:class="${#fields.hasErrors('global')} ? 'form-control is-invalid' : 'form-control'"
+                 th:class="${#fields.hasErrors('password')} ? 'form-control is-invalid' : 'form-control'"
                  id="userRegistrationPassword"
                  aria-describedby="password"
                  th:field="*{password}">

@@ -2,6 +2,7 @@ package lt.codeacademy.project.blog.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.codeacademy.project.blog.validator.annotation.Password;
 import org.hibernate.annotations.Type;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Password
 @Entity
 @Table(name = "user")
 public class User {
@@ -25,15 +27,15 @@ public class User {
     private UUID userId;
 
     @NotNull
-    @Size(min = 5, max = 250, message = "{validation.size.name}")
+    @Size(min = 2, max = 250, message = "{validation.size.name}")
     private String name;
 
     @NotNull
-    @Size(min = 5, max = 250, message = "{validation.size.name}")
+    @Size(min = 3, max = 250, message = "{validation.size.name}")
     private String surname;
 
     @NotNull
-    @Size(min = 5, max = 250, message = "{validation.size.name}")
+    @Size(min = 1, max = 250, message = "{validation.size.name}")
     @Column(unique = true)
     private String userName;
 
@@ -42,15 +44,16 @@ public class User {
     private String phone;
 
     @NotNull
-    @Email
+    @Email(message = "{validation.email}")
     private String email;
 
     @NotNull
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "{password.message}")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "{validation.password}")
     private String password;
 
     @NotNull
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "{password.message}")
+    @Transient
     private String repeatPassword;
 
 }

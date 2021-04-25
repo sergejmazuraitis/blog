@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
-    User getUserByUserIdAndUserName(UUID userId, String username);
+    User getUserByUserNameAndPassword(String userName, String password);
 }
