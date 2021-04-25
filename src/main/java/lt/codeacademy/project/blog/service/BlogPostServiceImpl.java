@@ -8,7 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class BlogPostServiceImpl implements BlogPostService {
@@ -16,6 +21,11 @@ public class BlogPostServiceImpl implements BlogPostService {
 
     public BlogPostServiceImpl(BlogPostRepository blogPostRepository) {
         this.blogPostRepository = blogPostRepository;
+    }
+
+    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
+        Set<Object> seen = ConcurrentHashMap.newKeySet();
+        return t -> seen.add(keyExtractor.apply(t));
     }
 
     @Override
@@ -51,5 +61,11 @@ public class BlogPostServiceImpl implements BlogPostService {
     @Override
     public List<BlogPost> findLastFivePost() {
         return blogPostRepository.findFirst5ByOrderByDateDesc();
+    }
+
+    @Override
+    public List<BlogPost> findAllCategories() {
+        List<BlogPost> blogPosts = blogPostRepository.getDistinctByCategoryNotNull();
+        return blogPosts.stream().filter(distinctByKey(BlogPost::getCategory)).collect(Collectors.toList());
     }
 }

@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface BlogPostRepository extends JpaRepository<BlogPost, UUID> {
     List<BlogPost> findByName(String name);
     List<BlogPost> findFirst5ByOrderByDateDesc();
+    List<BlogPost> getDistinctByCategoryNotNull();
 }

@@ -21,4 +21,6 @@ public interface BlogPostService {
     void deleteBlogPost(UUID id);
 
     List<BlogPost> findLastFivePost();
+
+    List<BlogPost> findAllCategories();
 }

@@ -37,6 +37,7 @@ public class BlogPostController {
     public String getBlogPosts(@PageableDefault(size = 5, sort = {"name"}, direction = Sort.Direction.ASC) Pageable pageable, Model model) {
         model.addAttribute("postsPage", blogPostService.getAllBlogPostsWithPages(pageable));
         model.addAttribute("lastsPosts", blogPostService.findLastFivePost());
+        model.addAttribute("categories", blogPostService.findAllCategories());
         return "posts";
     }
 

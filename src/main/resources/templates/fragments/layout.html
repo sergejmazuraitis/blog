@@ -108,7 +108,7 @@
     <div class="card-body">
         <h5 class="card-title" th:text="${lastPost.name}"></h5>
         <p class="card-text" th:text="${lastPost.description}"></p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a th:href="@{/posts/getPost(id=${lastPost.id})}" class="btn btn-primary" th:text="#{posts.read.post}"></a>
     </div>
 </div>
 
