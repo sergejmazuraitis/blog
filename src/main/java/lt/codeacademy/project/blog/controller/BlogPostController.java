@@ -36,6 +36,7 @@ public class BlogPostController {
     @GetMapping
     public String getBlogPosts(@PageableDefault(size = 5, sort = {"name"}, direction = Sort.Direction.ASC) Pageable pageable, Model model) {
         model.addAttribute("postsPage", blogPostService.getAllBlogPostsWithPages(pageable));
+        model.addAttribute("lastsPosts", blogPostService.findLastFivePost());
         return "posts";
     }
 
@@ -59,6 +60,7 @@ public class BlogPostController {
     public String getPostById(@RequestParam UUID id, Model model) {
         BlogPost blogPostst = blogPostService.getBlogPostById(id);
         model.addAttribute("post", blogPostst);
+        model.addAttribute("lastsPosts", blogPostService.findLastFivePost());
         return "post";
     }
 

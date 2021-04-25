@@ -4,6 +4,7 @@ import lt.codeacademy.project.blog.model.BlogPost;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface BlogPostService {
@@ -19,5 +20,5 @@ public interface BlogPostService {
 
     void deleteBlogPost(UUID id);
 
-
+    List<BlogPost> findLastFivePost();
 }

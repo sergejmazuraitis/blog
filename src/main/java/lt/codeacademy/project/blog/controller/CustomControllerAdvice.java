@@ -4,7 +4,6 @@ import lt.codeacademy.project.blog.exception.BlogPostFoundException;
 import lt.codeacademy.project.blog.exception.CommentFoundException;
 import lt.codeacademy.project.blog.exception.UserFoundException;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,5 +33,4 @@ public class CustomControllerAdvice {
     public String userNotFound(){
         return "userNotFound";
     }
-
 }
