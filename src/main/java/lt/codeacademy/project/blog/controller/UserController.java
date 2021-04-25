@@ -1,5 +1,6 @@
 package lt.codeacademy.project.blog.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import lt.codeacademy.project.blog.model.User;
 import lt.codeacademy.project.blog.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/users")
+@Slf4j
 public class UserController {
     private final UserService userService;
 
@@ -27,10 +29,11 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String createNewUser(@Valid User user, BindingResult errors, Model model) {
+    public String createNewUser(@Valid User user, BindingResult errors) {
         if (errors.hasErrors()) {
             return "registration";
         }
+        log.debug("Create new user: " + user);
         userService.createNewUser(user);
         return "redirect:/posts";
     }

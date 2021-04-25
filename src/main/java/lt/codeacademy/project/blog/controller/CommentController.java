@@ -1,5 +1,6 @@
 package lt.codeacademy.project.blog.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import lt.codeacademy.project.blog.model.Comment;
 import lt.codeacademy.project.blog.service.CommentService;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/comments")
+@Slf4j
 public class CommentController {
     private final CommentService commentService;
 
@@ -41,6 +43,8 @@ public class CommentController {
         if (errors.hasErrors()) {
             return "createcomment";
         }
+
+        log.debug("Created new comment " + comment);
         commentService.addComment(comment);
         return "redirect:/posts";
     }
@@ -57,6 +61,7 @@ public class CommentController {
         if (errors.hasErrors()) {
             return "createcomment";
         }
+        log.debug("Updated comment " + comment);
         commentService.updateComment(comment);
         return "redirect:/posts";
     }

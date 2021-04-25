@@ -2,11 +2,10 @@ package lt.codeacademy.project.blog.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Type;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -14,6 +13,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "blogpost")
 public class BlogPost {

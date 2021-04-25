@@ -1,5 +1,6 @@
 package lt.codeacademy.project.blog.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import lt.codeacademy.project.blog.model.BlogPost;
 import lt.codeacademy.project.blog.model.Comment;
 import lt.codeacademy.project.blog.service.BlogPostService;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/posts")
+@Slf4j
 public class BlogPostController {
     private final BlogPostService blogPostService;
 
@@ -48,6 +50,7 @@ public class BlogPostController {
         if (errors.hasErrors()){
             return "create";
         }
+        log.debug("Ceated new post" + blogPost);
         blogPostService.addBlogPost(blogPost);
         return "redirect:/posts";
     }
@@ -71,6 +74,7 @@ public class BlogPostController {
         if (errors.hasErrors()){
             return "create";
         }
+        log.debug("Updeted post " + blogPost);
         blogPostService.updateBlogPost(blogPost);
         return "redirect:/posts";
     }

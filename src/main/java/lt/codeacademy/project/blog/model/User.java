@@ -2,9 +2,9 @@ package lt.codeacademy.project.blog.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lt.codeacademy.project.blog.validator.annotation.Password;
 import org.hibernate.annotations.Type;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -15,6 +15,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@ToString
 @Password
 @Entity
 @Table(name = "user")
@@ -52,7 +53,7 @@ public class User {
     private String password;
 
     @NotNull
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "{password.message}")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "{validation.password}")
     @Transient
     private String repeatPassword;
 
