@@ -22,5 +22,7 @@ public interface BlogPostService {
 
     List<BlogPost> findLastFivePost();
 
-    List<BlogPost> findAllCategories();
+    List<String> findAllDistinctCategories();
+
+    Page<BlogPost> findBlogPostsByCategory(String category, Pageable pageable);
 }

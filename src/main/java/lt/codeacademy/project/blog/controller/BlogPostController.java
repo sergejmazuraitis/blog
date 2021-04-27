@@ -2,7 +2,6 @@ package lt.codeacademy.project.blog.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import lt.codeacademy.project.blog.model.BlogPost;
-import lt.codeacademy.project.blog.model.Comment;
 import lt.codeacademy.project.blog.service.BlogPostService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
@@ -34,10 +33,11 @@ public class BlogPostController {
     }
 
     @GetMapping
-    public String getBlogPosts(@PageableDefault(size = 5, sort = {"name"}, direction = Sort.Direction.ASC) Pageable pageable, Model model) {
+    public String getBlogPosts(@PageableDefault(size = 5, sort = {"name"}, direction = Sort.Direction.ASC) Pageable pageable,
+                               Model model) {
         model.addAttribute("postsPage", blogPostService.getAllBlogPostsWithPages(pageable));
         model.addAttribute("lastsPosts", blogPostService.findLastFivePost());
-        model.addAttribute("categories", blogPostService.findAllCategories());
+        model.addAttribute("categories", blogPostService.findAllDistinctCategories());
         return "posts";
     }
 
@@ -49,7 +49,7 @@ public class BlogPostController {
 
     @PostMapping("/create")
     public String createNewBlogPost(@Valid @ModelAttribute("post") BlogPost blogPost, BindingResult errors) {
-        if (errors.hasErrors()){
+        if (errors.hasErrors()) {
             return "create";
         }
         log.debug("Ceated new post" + blogPost);
@@ -74,7 +74,7 @@ public class BlogPostController {
 
     @PostMapping("/update")
     public String updateBlogPost(@Valid @ModelAttribute("post") BlogPost blogPost, BindingResult errors) {
-        if (errors.hasErrors()){
+        if (errors.hasErrors()) {
             return "create";
         }
         log.debug("Updeted post " + blogPost);
@@ -86,5 +86,17 @@ public class BlogPostController {
     public String deleteBlogPost(@RequestParam UUID id) {
         blogPostService.deleteBlogPost(id);
         return "redirect:/posts";
+    }
+
+    @GetMapping("/sortByCategories")
+    public String getBlogPostsSortedByCategories(@RequestParam String category,
+                                                 @PageableDefault(size = 5, sort = {"name"},
+                                                         direction = Sort.Direction.ASC)
+                                                         Pageable pageable,
+                                                 Model model) {
+        model.addAttribute("postsPage", blogPostService.findBlogPostsByCategory(category, pageable));
+        model.addAttribute("lastsPosts", blogPostService.findLastFivePost());
+        model.addAttribute("categories", blogPostService.findAllDistinctCategories());
+        return "posts";
     }
 }

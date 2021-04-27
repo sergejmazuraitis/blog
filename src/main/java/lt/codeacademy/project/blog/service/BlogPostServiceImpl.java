@@ -64,8 +64,14 @@ public class BlogPostServiceImpl implements BlogPostService {
     }
 
     @Override
-    public List<BlogPost> findAllCategories() {
-        List<BlogPost> blogPosts = blogPostRepository.getDistinctByCategoryNotNull();
-        return blogPosts.stream().filter(distinctByKey(BlogPost::getCategory)).collect(Collectors.toList());
+    public List<String> findAllDistinctCategories() {
+        List<String> blogPosts = blogPostRepository.getDistinctCategoriesNative();
+//        return blogPosts.stream().filter(distinctByKey(BlogPost::getCategory)).collect(Collectors.toList());
+        return blogPosts;
+    }
+
+    @Override
+    public Page<BlogPost> findBlogPostsByCategory(String category, Pageable pageable) {
+        return blogPostRepository.findBlogPostsByCategory(category, pageable);
     }
 }
