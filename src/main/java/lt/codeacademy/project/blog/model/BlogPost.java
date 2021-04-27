@@ -9,11 +9,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "blogpost")
 public class BlogPost {
@@ -50,4 +50,8 @@ public class BlogPost {
             max = 50,
             message = "{validation.size.name}")
     private String category;
+
+    @OneToMany(mappedBy = "blogPost", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Comment> comment;
 }

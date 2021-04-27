@@ -2,6 +2,7 @@ package lt.codeacademy.project.blog.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import lt.codeacademy.project.blog.model.Comment;
+import lt.codeacademy.project.blog.service.BlogPostService;
 import lt.codeacademy.project.blog.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +20,11 @@ import java.util.UUID;
 @Slf4j
 public class CommentController {
     private final CommentService commentService;
+    private final BlogPostService blogPostService;
 
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, BlogPostService blogPostService) {
         this.commentService = commentService;
+        this.blogPostService = blogPostService;
     }
 
     @GetMapping
@@ -33,7 +36,8 @@ public class CommentController {
     @GetMapping("/create")
     public String openCreateNewCommentForm(@RequestParam UUID id, Model model) {
         Comment comment = new Comment();
-        comment.setBlogPostId(id);
+        comment.setBlogPost(blogPostService.getBlogPostById(id));
+//        comment.setBlogPostId(id);
         model.addAttribute("comment", comment);
         return "createcomment";
     }

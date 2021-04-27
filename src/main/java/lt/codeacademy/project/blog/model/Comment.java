@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "comments")
 public class Comment {
@@ -38,6 +37,9 @@ public class Comment {
             message = "{validation.size.name}")
     private String content;
 
-    @Type(type = "uuid-char")
-    private UUID blogPostId;
+//    @Type(type = "uuid-char")
+//    private UUID blogPostId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "blogPost_id", nullable = false)
+    private BlogPost blogPost;
 }
