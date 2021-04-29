@@ -76,30 +76,34 @@
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" th:href="${{#httpServletRequest.requestURI}} + '?lang=UK'"
-               th:text="#{lang.en}"></a></li>
+               th:text="#{sort.asc}"></a></li>
         <li><a class="dropdown-item" th:href="${{#httpServletRequest.requestURI}} + '?lang=LTU'"
-               th:text="#{lang.lt}"></a></li>
+               th:text="#{sort.desc}"></a></li>
     </ul>
 </li>
 
-<ul th:fragment="paging(postPage)" class="pagination my-3 mx-auto">
+<ul th:fragment="paging(pages, link)" class="pagination my-3 mx-auto"
+    th:with="order=${pages.sort.iterator().hasNext() ? pages.sort.iterator().next() : null},
+					sort=${order.property + ',' + order.direction} +(${order.property} eq 'name' ? ',ignorecase' : '')">
     <li class="page-item"
-        th:classappend="${postsPage.number eq 0 ? 'disabled' : ''}">
+        th:classappend="${pages.number eq 0 ? 'disabled' : ''}">
         <a class="page-link"
-           th:href="@{/posts(page=${postsPage.number} - 1)}"
+           th:href="${{#httpServletRequest.requestURI}} + '?page=' + (${pages.number} - 1) + '&sort=' + ${sort}"
            th:text="#{posts.previuos}"></a>
     </li>
 
     <li class="page-item"
-        th:each="pageNumber : ${#numbers.sequence(0, postsPage.totalPages - 1)}"
-        th:classappend="${pageNumber eq postsPage.number ? 'active' : ''}">
-        <a class="page-link" th:href="@{/posts(page=${pageNumber})}" th:text="${pageNumber} + 1">1</a>
+        th:each="pageNumber : ${#numbers.sequence(0, pages.totalPages - 1)}"
+        th:classappend="${pageNumber eq pages.number ? 'active' : ''}">
+        <a class="page-link"
+           th:href="${{#httpServletRequest.requestURI}} + '?page=' + ${pageNumber} + '&sort=' + ${sort}"
+           th:text="${pageNumber} + 1"></a>
     </li>
 
     <li class="page-item"
-        th:classappend="${postsPage.number eq postsPage.totalPages - 1 ? 'disabled' : ''}">
+        th:classappend="${pages.number eq pages.totalPages - 1 ? 'disabled' : ''}">
         <a class="page-link"
-           th:href="@{/posts(page=${postsPage.number} + 1)}"
+           th:href="${{#httpServletRequest.requestURI}} + '?page=' + (${pages.number} + 1) + '&sort=' + ${sort}"
            th:text="#{posts.next}"></a>
     </li>
 </ul>

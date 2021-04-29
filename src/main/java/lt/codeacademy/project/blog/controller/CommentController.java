@@ -4,6 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import lt.codeacademy.project.blog.model.Comment;
 import lt.codeacademy.project.blog.service.BlogPostService;
 import lt.codeacademy.project.blog.service.CommentService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,8 +31,12 @@ public class CommentController {
     }
 
     @GetMapping
-    public String getCommentsByBlogPostId(@RequestParam UUID id, Model model) {
-        model.addAttribute("comments", commentService.getCommentsByBlogPostId(id));
+    public String getCommentsByBlogPostId(@RequestParam UUID id,
+                                          Model model,
+                                          @PageableDefault(size = 1, sort = {"date"}, direction = Sort.Direction.ASC) Pageable pageable) {
+        model.addAttribute("comments", commentService.getCommentsByBlogPostId(id, pageable));
+        model.addAttribute("lastsPosts", blogPostService.findLastFivePost());
+
         return "comments";
     }
 
@@ -37,7 +44,6 @@ public class CommentController {
     public String openCreateNewCommentForm(@RequestParam UUID id, Model model) {
         Comment comment = new Comment();
         comment.setBlogPost(blogPostService.getBlogPostById(id));
-//        comment.setBlogPostId(id);
         model.addAttribute("comment", comment);
         return "createcomment";
     }

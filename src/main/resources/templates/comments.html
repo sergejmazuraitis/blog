@@ -3,16 +3,33 @@
 <head th:replace="fragments/layout :: head(title=#{comments.comments})"></head>
 <body>
 <div class="container">
-  <div class="card mt-3" th:each="comment: ${comments}">
-    <div class="card-body">
-      <h5 class="card-title" th:text="${comment.name}"></h5>
-      <p class="card-text" th:text="${comment.content}"></p>
-      <a th:href="@{/comments/update(id=${comment.commentId})}" class="btn btn-primary" th:text="#{comments.change}"></a>
-      <a th:href="@{/comments/delete(id=${comment.commentId})}" class="btn btn-primary" th:text="#{comments.delete}"></a>
+    <div class="row">
+        <div class="col-9">
+            <div th:if="${not comments.hasContent()}"
+                 th:insert="fragments/layout :: errorsCard(errorMessageText=#{comments.empty})"></div>
+            <div th:if="${comments.hasContent()}" class="card mt-3">
+                <div class="card-body" th:each="comment: ${comments.content}">
+                    <h5 class="card-title" th:text="${comment.name}"></h5>
+                    <p class="card-text" th:text="${comment.content}"></p>
+                    <a th:href="@{/comments/update(id=${comment.commentId})}" class="btn btn-primary"
+                       th:text="#{comments.change}"></a>
+                    <a th:href="@{/comments/delete(id=${comment.commentId})}" class="btn btn-primary"
+                       th:text="#{comments.delete}"></a>
+                    <hr>
+                </div>
+                <div th:replace="fragments/layout :: paging(pages=${comments}, link='comments')"></div>
+
+            </div>
+
+        </div>
+      <div class="col-3">
+        <h4 class="mt-3 text-center" th:text="#{posts.last.posts}"></h4>
+        <div th:insert="fragments/layout :: lastsPosts"></div>
+      </div>
+
     </div>
-  </div>
 </div>
-<footer th:insert="fragments/layout :: footer" class="bg-light text-center text-lg-start fixed-bottom"></footer>
+<footer th:insert="fragments/layout :: footer" class="bg-light text-center text-lg-start"></footer>
 
 </body>
 </html>

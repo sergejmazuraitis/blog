@@ -89,14 +89,15 @@ public class BlogPostController {
     }
 
     @GetMapping("/sortByCategories")
-    public String getBlogPostsSortedByCategories(@RequestParam String category,
+    public String getBlogPostsSortedByCategories(@RequestParam String postCategory,
                                                  @PageableDefault(size = 5, sort = {"name"},
                                                          direction = Sort.Direction.ASC)
                                                          Pageable pageable,
                                                  Model model) {
-        model.addAttribute("postsPage", blogPostService.findBlogPostsByCategory(category, pageable));
+        model.addAttribute("postsPage", blogPostService.findBlogPostsByCategory(postCategory, pageable));
         model.addAttribute("lastsPosts", blogPostService.findLastFivePost());
         model.addAttribute("categories", blogPostService.findAllDistinctCategories());
+        model.addAttribute("postCategory", postCategory);
         return "posts";
     }
 }

@@ -18,5 +18,5 @@ public interface CommentService {
 
     void deleteComment(UUID id);
 
-    List<Comment> getCommentsByBlogPostId(UUID id);
+    Page<Comment> getCommentsByBlogPostId(UUID id, Pageable pageable);
 }

@@ -44,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getCommentsByBlogPostId(UUID id) {
-        return commentRepository.getCommentsByBlogPostId(id);
+    public Page<Comment> getCommentsByBlogPostId(UUID id, Pageable pageable) {
+        return commentRepository.getCommentsByBlogPostId(id ,pageable);
     }
 }

@@ -9,13 +9,13 @@
     <div class="row">
         <div class="col-2">
             <h4 class="mt-3 text-center" th:text="#{posts.categories}"></h4>
-            <ul class="list-group mt-3 text-center">
-<!--                <li class="list-group-item active" aria-current="true">An active item</li>-->
-                <li class="list-group-item" th:each="category: ${categories}">
-                    <a th:href="@{/posts/sortByCategories(category=${category})}"
-                       th:text="${category}"></a>
-                </li>
-            </ul>
+            <div class="list-group mt-3 text-center">
+                <a href="#" class="list-group-item list-group-item-action"
+                   th:each="category: ${categories}"
+                   th:classappend="${postCategory eq category ? 'active' : ''}"
+                   th:href="@{/posts/sortByCategories(postCategory=${category})}"
+                   th:text="${category}"></a>
+            </div>
 
         </div>
 
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div th:replace="fragments/layout :: paging(postPage=${postsPage})"></div>
+            <div th:replace="fragments/layout :: paging(pages=${postsPage}, link='posts')"></div>
 
         </div>
         <div class="col-3">
