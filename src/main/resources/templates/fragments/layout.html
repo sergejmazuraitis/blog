@@ -11,11 +11,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
             crossorigin="anonymous"></script>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#" th:text="#{posts.logo}">CA Blog</a>
+        <a class="navbar-brand" th:href="@{/posts}" th:text="#{posts.logo}">CA Blog</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -56,54 +57,149 @@
     </ul>
 </li>
 
-<nav th:fragment="navbarForMainMenu(postPage)" class="navbar navbar-expand-lg navbar-light bg-light mt-3">
+<nav th:fragment="navbarForMainMenu(postPage, id, category)" class="navbar navbar-expand-lg navbar-light bg-light mt-3">
     <div class="container-fluid">
         <span th:text="#{posts.total(${postPage.totalElements})}"></span>
         <div class="collapse navbar-collapse" id="navbarSupportedContentMainMenu">
 
 
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li th:replace="this :: sort"></li>
+                <li th:replace="this :: sort(postPage=${postsPage}, id=${id}, category=${category})"></li>
             </ul>
 
         </div>
     </div>
 </nav>
 
-<li th:fragment="sort" class="nav-item dropdown" id="sortSelector">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSort" role="button"
-       data-bs-toggle="dropdown" aria-expanded="false" th:text="#{sort.sort}">
+<li th:fragment="sort(postPage, id, category)" class="nav-item dropdown" id="sortSelector">
+    <a class="nav-link dropdown-toggle" id="navbarDropdownSort" role="button"
+       data-bs-toggle="dropdown" aria-expanded="false"
+       th:text="#{sort.sort}">
     </a>
-    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" th:href="${{#httpServletRequest.requestURI}} + '?lang=UK'"
-               th:text="#{sort.asc}"></a></li>
-        <li><a class="dropdown-item" th:href="${{#httpServletRequest.requestURI}} + '?lang=LTU'"
-               th:text="#{sort.desc}"></a></li>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+        th:with="sortASC='&sort=name,ASC,ignorecase',
+                sortDESC='&sort=name,DESC,ignorecase'">
+
+        <li>
+            <a class="page-link"
+               th:if="${id ne null}"
+               th:href="${{#httpServletRequest.requestURI}} +
+            '?id=' + ${id} +
+             '&page=' + ${postPage.number} +
+             ${sortASC}"
+               th:text="#{sort.asc}"></a>
+            <a class="page-link"
+               th:if="${category ne null}"
+               th:href="${{#httpServletRequest.requestURI}} +
+            '?postCategory=' + ${category} +
+            '&page=' + ${postPage.number} +
+            ${sortASC}"
+               th:text="#{sort.asc}"></a>
+            <a class="page-link"
+               th:if="${id eq null and category eq null}"
+               th:href="${{#httpServletRequest.requestURI}} +
+            '?page=' + ${postPage.number} +
+             ${sortASC}"
+               th:text="#{sort.asc}"></a>
+
+        </li>
+        <li>
+            <a class="page-link"
+               th:if="${id ne null}"
+               th:href="${{#httpServletRequest.requestURI}} +
+            '?id=' + ${id} +
+             '&page=' + ${postPage.number} +
+             ${sortDESC}"
+               th:text="#{sort.desc}"></a>
+            <a class="page-link"
+               th:if="${category ne null}"
+               th:href="${{#httpServletRequest.requestURI}} +
+            '?postCategory=' + ${category} +
+            '&page=' + ${postPage.number} +
+            ${sortDESC}"
+               th:text="#{sort.desc}"></a>
+            <a class="page-link"
+               th:if="${id eq null and category eq null}"
+               th:href="${{#httpServletRequest.requestURI}} +
+            '?page=' + ${postPage.number} +
+             ${sortDESC}"
+               th:text="#{sort.desc}"></a>
+
     </ul>
 </li>
 
-<ul th:fragment="paging(pages, link)" class="pagination my-3 mx-auto"
+<ul th:fragment="paging(pages, id, category)" class="pagination my-3 mx-auto"
     th:with="order=${pages.sort.iterator().hasNext() ? pages.sort.iterator().next() : null},
-					sort=${order.property + ',' + order.direction} +(${order.property} eq 'name' ? ',ignorecase' : '')">
+					sort=${order.property + ',' + order.direction} + (${order.property} eq 'name' ? ',ignorecase' : '')">
     <li class="page-item"
         th:classappend="${pages.number eq 0 ? 'disabled' : ''}">
         <a class="page-link"
+           th:if="${id ne null}"
+           th:href="${{#httpServletRequest.requestURI}} +
+            '?id=' + ${id} +
+             '&page=' + (${pages.number} - 1) +
+             '&sort=' + ${sort}"
+           th:text="#{posts.previuos}"></a>
+        <a class="page-link"
+           th:if="${category ne null}"
+           th:href="${{#httpServletRequest.requestURI}} +
+            '?postCategory=' + ${category} +
+            '&page=' + (${pages.number} - 1) + '&sort=' + ${sort}"
+           th:text="#{posts.previuos}"></a>
+        <a class="page-link"
+           th:if="${id eq null and category eq null}"
            th:href="${{#httpServletRequest.requestURI}} + '?page=' + (${pages.number} - 1) + '&sort=' + ${sort}"
            th:text="#{posts.previuos}"></a>
+
     </li>
 
     <li class="page-item"
         th:each="pageNumber : ${#numbers.sequence(0, pages.totalPages - 1)}"
         th:classappend="${pageNumber eq pages.number ? 'active' : ''}">
         <a class="page-link"
-           th:href="${{#httpServletRequest.requestURI}} + '?page=' + ${pageNumber} + '&sort=' + ${sort}"
+           th:if="${id ne null}"
+           th:href="${{#httpServletRequest.requestURI}} +
+            '?id=' + ${id} +
+             '&page=' + ${pageNumber} +
+             '&sort=' + ${sort}"
            th:text="${pageNumber} + 1"></a>
+        <a class="page-link"
+           th:if="${category ne null}"
+           th:href="${{#httpServletRequest.requestURI}} +
+            '?postCategory=' + ${category} +
+            '&page=' + ${pageNumber} +
+            '&sort=' + ${sort}"
+           th:text="${pageNumber} + 1"></a>
+        <a class="page-link"
+           th:if="${id eq null and category eq null}"
+           th:href="${{#httpServletRequest.requestURI}} +
+            '?page=' + ${pageNumber} +
+             '&sort=' + ${sort}"
+           th:text="${pageNumber} + 1"></a>
+
     </li>
 
     <li class="page-item"
         th:classappend="${pages.number eq pages.totalPages - 1 ? 'disabled' : ''}">
         <a class="page-link"
-           th:href="${{#httpServletRequest.requestURI}} + '?page=' + (${pages.number} + 1) + '&sort=' + ${sort}"
+           th:if="${id ne null}"
+           th:href="${{#httpServletRequest.requestURI}} +
+            '?id=' + ${id} +
+             '&page=' + (${pages.number} + 1) +
+             '&sort=' + ${sort}"
+           th:text="#{posts.next}"></a>
+        <a class="page-link"
+           th:if="${category ne null}"
+           th:href="${{#httpServletRequest.requestURI}} +
+            '?postCategory=' + ${category} +
+            '&page=' + (${pages.number} + 1) +
+            '&sort=' + ${sort}"
+           th:text="#{posts.next}"></a>
+        <a class="page-link"
+           th:if="${id eq null and category eq null}"
+           th:href="${{#httpServletRequest.requestURI}} +
+            '?page=' + (${pages.number} + 1) +
+             '&sort=' + ${sort}"
            th:text="#{posts.next}"></a>
     </li>
 </ul>
@@ -116,7 +212,7 @@
     </div>
 </div>
 
-<footer th:fragment="footer" >
+<footer th:fragment="footer">
     <div th:fragment="footer" class="text-center p-3 mt-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2021 Copyright:
         <a class="text-dark" href="#" th:text="#{footer.link}"></a>

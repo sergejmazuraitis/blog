@@ -17,7 +17,7 @@
                        th:text="#{comments.delete}"></a>
                     <hr>
                 </div>
-                <div th:replace="fragments/layout :: paging(pages=${comments}, link='comments')"></div>
+                <div th:replace="fragments/layout :: paging(pages=${comments}, id = ${id}, category = null)"></div>
 
             </div>
 

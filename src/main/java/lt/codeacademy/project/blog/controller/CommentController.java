@@ -36,6 +36,7 @@ public class CommentController {
                                           @PageableDefault(size = 1, sort = {"date"}, direction = Sort.Direction.ASC) Pageable pageable) {
         model.addAttribute("comments", commentService.getCommentsByBlogPostId(id, pageable));
         model.addAttribute("lastsPosts", blogPostService.findLastFivePost());
+        model.addAttribute("id", id);
 
         return "comments";
     }

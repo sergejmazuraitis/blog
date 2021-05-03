@@ -46,7 +46,7 @@ public class BlogPost {
     private Date date = new Date();
 
     @NotNull
-    @Size(min = 5,
+    @Size(min = 2,
             max = 50,
             message = "{validation.size.name}")
     private String category;
