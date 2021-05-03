@@ -1,5 +1,6 @@
 package lt.codeacademy.project.blog.service;
 
+import lombok.extern.slf4j.Slf4j;
 import lt.codeacademy.project.blog.exception.BlogPostFoundException;
 import lt.codeacademy.project.blog.model.BlogPost;
 import lt.codeacademy.project.blog.repository.BlogPostRepository;
@@ -16,6 +17,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class BlogPostServiceImpl implements BlogPostService {
     private final BlogPostRepository blogPostRepository;
 
@@ -30,7 +32,11 @@ public class BlogPostServiceImpl implements BlogPostService {
 
     @Override
     public void addBlogPost(BlogPost blogPost) {
-        blogPostRepository.save(blogPost);
+        try {
+            blogPostRepository.save(blogPost);
+        }catch (IllegalArgumentException e){
+            log.error("Cannot create BlogPost {}", blogPost);
+        }
     }
 
     @Override
@@ -50,7 +56,12 @@ public class BlogPostServiceImpl implements BlogPostService {
 
     @Override
     public void updateBlogPost(BlogPost blogPost) {
-        blogPostRepository.save(blogPost);
+
+        try {
+            blogPostRepository.save(blogPost);
+        }catch (IllegalArgumentException e){
+            log.error("Cannot create BlogPost {}", blogPost);
+        }
     }
 
     @Override
