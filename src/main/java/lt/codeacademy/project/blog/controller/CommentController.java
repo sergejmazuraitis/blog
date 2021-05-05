@@ -10,16 +10,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/comments")
 @Slf4j
 public class CommentController {
     private final CommentService commentService;
@@ -30,7 +26,7 @@ public class CommentController {
         this.blogPostService = blogPostService;
     }
 
-    @GetMapping
+    @GetMapping("/public/comments")
     public String getCommentsByBlogPostId(@RequestParam UUID id,
                                           Model model,
                                           @PageableDefault(size = 1, sort = {"date"}, direction = Sort.Direction.ASC) Pageable pageable) {
@@ -41,7 +37,7 @@ public class CommentController {
         return "comments";
     }
 
-    @GetMapping("/create")
+    @GetMapping("/private/comments/create")
     public String openCreateNewCommentForm(@RequestParam UUID id, Model model) {
         Comment comment = new Comment();
         comment.setBlogPost(blogPostService.getBlogPostById(id));
@@ -57,10 +53,10 @@ public class CommentController {
 
         log.debug("Created new comment " + comment);
         commentService.addComment(comment);
-        return "redirect:/posts";
+        return "redirect:/public/posts";
     }
 
-    @GetMapping("/update")
+    @GetMapping("/private/comments/update")
     public String updateComment(@RequestParam UUID id, Model model) {
         Comment comment = commentService.getCommentById(id);
         model.addAttribute("comment", comment);
@@ -74,13 +70,12 @@ public class CommentController {
         }
         log.debug("Updated comment " + comment);
         commentService.updateComment(comment);
-        return "redirect:/posts";
+        return "redirect:/public/posts";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/private/comments/delete")
     public String deleteComment(@RequestParam UUID id) {
         commentService.deleteComment(id);
-        return "redirect:/posts";
+        return "redirect:/public/posts";
     }
-
 }

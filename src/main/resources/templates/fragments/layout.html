@@ -16,7 +16,7 @@
 
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/posts}" th:text="#{posts.logo}">CA Blog</a>
+        <a class="navbar-brand" th:href="@{/public/posts}" th:text="#{posts.logo}">CA Blog</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,7 @@
 
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/posts/create}" th:text="#{posts.create.new}"></a>
+                    <a class="nav-link" th:href="@{/public/posts/create}" th:text="#{posts.create.new}"></a>
                 </li>
 
                 <li class="nav-item">
@@ -208,7 +208,7 @@
     <div class="card-body">
         <h5 class="card-title" th:text="${lastPost.name}"></h5>
         <p class="card-text" th:text="${lastPost.description}"></p>
-        <a th:href="@{/posts/getPost(id=${lastPost.id})}" class="btn btn-primary" th:text="#{posts.read.post}"></a>
+        <a th:href="@{/public/posts/getPost(id=${lastPost.id})}" class="btn btn-primary" th:text="#{posts.read.post}"></a>
     </div>
 </div>
 

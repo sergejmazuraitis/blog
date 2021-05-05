@@ -1,11 +1,22 @@
 package lt.codeacademy.project.blog.service;
 
-import lt.codeacademy.project.blog.model.User;
+import lt.codeacademy.project.blog.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+@Service
+public class UserService implements UserDetailsService {
+    private final UserRepository userRepository;
 
-public interface UserService {
-    User getUserById(UUID userId);
-    void createNewUser(User user);
-    User getUserByUserNameAndPassword(String userName, String password);
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("'" + username + "' not found!"));
+    }
 }

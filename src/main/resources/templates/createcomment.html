@@ -24,7 +24,7 @@
                       th:placeholder="#{create.content}" th:errorclass="error"></textarea>
             <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
         </div>
-        <a th:href="@{/posts}" class="btn btn-primary" th:text="#{posts.back}"></a>
+        <a th:href="@{/public/posts}" class="btn btn-primary" th:text="#{posts.back}"></a>
         <button type="submit" class="btn btn-primary" th:text="#{create.save}"></button>
     </form>
 </div>

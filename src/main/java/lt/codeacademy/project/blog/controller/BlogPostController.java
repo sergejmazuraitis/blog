@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/posts")
+@RequestMapping("/public/posts")
 @Slf4j
 public class BlogPostController {
     private final BlogPostService blogPostService;
@@ -54,7 +54,7 @@ public class BlogPostController {
         }
         log.debug("Ceated new post" + blogPost);
         blogPostService.addBlogPost(blogPost);
-        return "redirect:/posts";
+        return "redirect:/public/posts";
     }
 
     @GetMapping("/getPost")
@@ -79,16 +79,16 @@ public class BlogPostController {
         }
         log.debug("Updeted post " + blogPost);
         blogPostService.updateBlogPost(blogPost);
-        return "redirect:/posts";
+        return "redirect:/public/posts";
     }
 
     @GetMapping("/delete")
     public String deleteBlogPost(@RequestParam UUID id) {
         blogPostService.deleteBlogPost(id);
-        return "redirect:/posts";
+        return "redirect:/public/posts";
     }
 
-    @GetMapping("/sortByCategories")
+    @GetMapping("/public/posts/sortByCategories")
     public String getBlogPostsSortedByCategories(@RequestParam String postCategory,
                                                  @PageableDefault(size = 5, sort = {"name"},
                                                          direction = Sort.Direction.ASC)

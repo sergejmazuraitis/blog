@@ -12,13 +12,13 @@
             <div class="list-group mt-3 text-center">
                 <a class="list-group-item list-group-item-action"
                    th:classappend="${postCategory eq null ? 'active' : ''}"
-                   th:href="@{/posts/}"
+                   th:href="@{/public/posts/}"
                    th:text="#{category.all}"></a>
 
                 <a class="list-group-item list-group-item-action"
                    th:each="category: ${categories}"
                    th:classappend="${postCategory eq category ? 'active' : ''}"
-                   th:href="@{/posts/sortByCategories(postCategory=${category})}"
+                   th:href="@{/public/posts/sortByCategories(postCategory=${category})}"
                    th:text="${category}"></a>
             </div>
 
@@ -31,7 +31,7 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text="${post.name}"></h5>
                         <p class="card-text" th:text="${post.description}"></p>
-                        <a th:href="@{/posts/getPost(id=${post.id})}" class="btn btn-primary"
+                        <a th:href="@{/public/posts/getPost(id=${post.id})}" class="btn btn-primary"
                            th:text="#{posts.read.post}"></a>
                     </div>
                 </div>

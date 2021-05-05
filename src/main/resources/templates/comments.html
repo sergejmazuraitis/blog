@@ -11,9 +11,9 @@
                 <div class="card-body" th:each="comment: ${comments.content}">
                     <h5 class="card-title" th:text="${comment.name}"></h5>
                     <p class="card-text" th:text="${comment.content}"></p>
-                    <a th:href="@{/comments/update(id=${comment.commentId})}" class="btn btn-primary"
+                    <a th:href="@{/private/comments/update(id=${comment.commentId})}" class="btn btn-primary"
                        th:text="#{comments.change}"></a>
-                    <a th:href="@{/comments/delete(id=${comment.commentId})}" class="btn btn-primary"
+                    <a th:href="@{/private/comments/delete(id=${comment.commentId})}" class="btn btn-primary"
                        th:text="#{comments.delete}"></a>
                     <hr>
                 </div>

@@ -2,24 +2,28 @@ package lt.codeacademy.project.blog.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import lt.codeacademy.project.blog.validator.annotation.Password;
 import org.hibernate.annotations.Type;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
 @Setter
-@ToString
 @Password
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -38,7 +42,7 @@ public class User {
     @NotNull
     @Size(min = 1, max = 250, message = "{validation.size.name}")
     @Column(unique = true)
-    private String userName;
+    private String username;
 
     // TODO: 2021-04-23 only digits and +
     @NotNull
@@ -57,4 +61,36 @@ public class User {
     @Transient
     private String repeatPassword;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

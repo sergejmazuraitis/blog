@@ -144,6 +144,15 @@ INSERT INTO COMMENTS (comment_id, name, date , content, blog_post_id)
 VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c64a', 'Vardas', '2021-04-03', 'Bandau irašyti pirmą postą', '30ae6b63-1e7b-4c55-95f8-1356040908c6'),
        ('9f650ee7-da8c-430d-99e5-a771aa98c65a', 'KitasVardas', '2021-04-04', 'Bandau irašyti pirmą postą pakartotinai', '30ae6b63-1e7b-4c55-95f8-1356040908c6');
 
-INSERT INTO USER (user_id, name, surname, user_name, phone, email, password)
-VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c66a', 'Vardas', 'Vardenis', 'vard', '+37066612345', 'vard@vard.com', 'Vardas123'),
-       ('9f650ee7-da8c-430d-99e5-a771aa98c99a', 'Vardė', 'Vardytė', 'oho', '+37065578945', 'oho@oho.lt', '12345678A');
+INSERT INTO USER (user_id, name, surname, username, phone, email, password)
+VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c66a', 'Vardas', 'Vardenis', 'user', '+37066612345', 'vard@vard.com', '{bcrypt}$2y$12$P/3t/x6bW7X/q27hFLOpBugoLVXomfWlR1JzsvO7.WsqUBy8ksJ5e'), /*a*/
+       ('9f650ee7-da8c-430d-99e5-a771aa98c99a', 'Vardė', 'Vardytė', 'admin', '+37065578945', 'oho@oho.lt', '{bcrypt}$2y$12$YYxTGJrV4zzTyIlwvKy3JemEFlYnqbDYlHHz5/ubqZ2jj2ILkCuOi'); /*aa*/
+
+INSERT INTO ROLES (id, name)
+VALUES ('7a580a64-a414-40dc-8861-52aa79ff2257', 'USER'),
+       ('7a580a64-a414-40dc-8861-52aa79ff2258', 'ADMIN');
+
+INSERT INTO USER_ROLES (user_user_id, roles_id)
+VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c66a', '7a580a64-a414-40dc-8861-52aa79ff2257'),
+       ('9f650ee7-da8c-430d-99e5-a771aa98c99a', '7a580a64-a414-40dc-8861-52aa79ff2257'),
+       ('9f650ee7-da8c-430d-99e5-a771aa98c99a', '7a580a64-a414-40dc-8861-52aa79ff2258');

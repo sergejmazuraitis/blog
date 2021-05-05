@@ -13,7 +13,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "Roles")
 public class Role implements GrantedAuthority {
-
     @Id
     @GeneratedValue
     @Column(columnDefinition = "VARCHAR(36)", updatable = false)
