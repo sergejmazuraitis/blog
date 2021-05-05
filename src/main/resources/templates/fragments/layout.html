@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:fragment="head(title)">
     <meta charset="UTF-8">
@@ -27,11 +29,18 @@
 
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/public/posts/create}" th:text="#{posts.create.new}"></a>
+                    <a sec:authorize="hasRole('ADMIN')"
+                       class="nav-link"
+                       th:href="@{/public/posts/create}"
+                       th:text="#{posts.create.new}"></a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/users/login}" th:text="#{posts.signin}"></a>
+                <li sec:authorize="!isAuthenticated()" class="nav-item">
+                    <a class="nav-link" th:href="@{/blogLogin}" th:text="#{posts.signin}"></a>
+                </li>
+
+                <li sec:authorize="isAuthenticated()" class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}" th:text="#{posts.signout}"></a>
                 </li>
 
                 <li class="nav-item">

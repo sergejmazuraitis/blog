@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +21,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/public/posts")
 @Slf4j
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BlogPostController {
     private final BlogPostService blogPostService;
 
@@ -83,12 +87,13 @@ public class BlogPostController {
     }
 
     @GetMapping("/delete")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteBlogPost(@RequestParam UUID id) {
         blogPostService.deleteBlogPost(id);
         return "redirect:/public/posts";
     }
 
-    @GetMapping("/public/posts/sortByCategories")
+    @GetMapping("/sortByCategories")
     public String getBlogPostsSortedByCategories(@RequestParam String postCategory,
                                                  @PageableDefault(size = 5, sort = {"name"},
                                                          direction = Sort.Direction.ASC)
