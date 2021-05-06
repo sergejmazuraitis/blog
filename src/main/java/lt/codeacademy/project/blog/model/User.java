@@ -13,10 +13,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -41,7 +38,7 @@ public class User implements UserDetails {
 
     @NotNull
     @Size(min = 1, max = 250, message = "{validation.size.name}")
-    @Column(unique = true)
+//    @Column(unique = true)
     private String username;
 
     // TODO: 2021-04-23 only digits and +
@@ -53,16 +50,16 @@ public class User implements UserDetails {
     private String email;
 
     @NotNull
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "{validation.password}")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).{8,}$", message = "{validation.password}")
     private String password;
 
     @NotNull
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$", message = "{validation.password}")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d).{8,}$", message = "{validation.password}")
     @Transient
     private String repeatPassword;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @ManyToMany
+    private Set<Role> roles = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -93,4 +90,9 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void addRole(Role role){
+        roles.add(role);
+    }
 }
+

@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="col-5">
-            <form method="post" th:object="${user}">
+            <form method="post" th:object="${user}" th:action="@{/public/register}">
                 <div class="mb-3">
                     <label for="userRegistrationName" class="form-label" th:text="#{user.name}"></label>
                     <input type="text"
@@ -35,10 +35,10 @@
                     <input type="text"
                            th:class="${#fields.hasErrors('surname')} ? 'form-control is-invalid' : 'form-control'"
                            id="userRegistrationUsername"
-                           aria-describedby="userName"
-                           th:field="*{userName}">
-                    <div id="userName" class="invalid-feedback" th:if="${#fields.hasErrors('userName')}"
-                         th:errors="*{userName}"></div>
+                           aria-describedby="username"
+                           th:field="*{username}">
+                    <div id="username" class="invalid-feedback" th:if="${#fields.hasErrors('username')}"
+                         th:errors="*{username}"></div>
                 </div>
                 <div class="mb-3">
                     <label for="userRegistrationEmail" class="form-label" th:text="#{user.email}"></label>
