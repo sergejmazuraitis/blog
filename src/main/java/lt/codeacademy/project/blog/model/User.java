@@ -5,7 +5,6 @@ import lombok.Setter;
 import lt.codeacademy.project.blog.validator.annotation.Password;
 import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -38,7 +37,7 @@ public class User implements UserDetails {
 
     @NotNull
     @Size(min = 1, max = 250, message = "{validation.size.name}")
-//    @Column(unique = true)
+    @Column(unique = true)
     private String username;
 
     // TODO: 2021-04-23 only digits and +
@@ -60,6 +59,10 @@ public class User implements UserDetails {
 
     @ManyToMany
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -91,7 +94,7 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void addRole(Role role){
+    public void addRole(Role role) {
         roles.add(role);
     }
 }

@@ -27,7 +27,7 @@ public class Comment {
 //    @Size(min = 3,
 //            max = 50,
 //            message = "{validation.size.name}")
-    private String name;
+//    private String name;
 
     private Date date = new Date();
 
@@ -42,4 +42,8 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "blogPost_id", nullable = false)
     private BlogPost blogPost;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

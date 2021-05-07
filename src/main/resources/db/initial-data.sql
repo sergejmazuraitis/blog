@@ -140,11 +140,6 @@ VALUES ('30ae6b63-1e7b-4c55-95f8-1356040908c6',
         'Last',
         '2021-04-25');
 
-INSERT INTO COMMENTS (comment_id, name, date, content, blog_post_id)
-VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c64a', 'Vardas', '2021-04-03', 'Bandau irašyti pirmą postą',
-        '30ae6b63-1e7b-4c55-95f8-1356040908c6'),
-       ('9f650ee7-da8c-430d-99e5-a771aa98c65a', 'KitasVardas', '2021-04-04', 'Bandau irašyti pirmą postą pakartotinai',
-        '30ae6b63-1e7b-4c55-95f8-1356040908c6');
 
 INSERT INTO USER (user_id, name, surname, username, phone, email, password)
 VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c66a', 'Vardas', 'Vardenis', 'user', '+37066612345', 'vard@vard.com',
@@ -153,6 +148,13 @@ VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c66a', 'Vardas', 'Vardenis', 'user', '+
         '{bcrypt}$2y$12$YYxTGJrV4zzTyIlwvKy3JemEFlYnqbDYlHHz5/ubqZ2jj2ILkCuOi'), /*aa*/
        ('1f650ee7-da8c-430d-99e5-a771aa98c99a', 'Naujas', 'Naujausias', 'oho', '+37065578945', 'oho@oho.lt',
         '{bcrypt}$2a$10$XKVEB8yx3TtaHcFrgAI/kekdkOBx9Z71xIrWZRDyihXld6qihd9HK'); /*pass*/
+
+INSERT INTO COMMENTS (comment_id, date, content, blog_post_id, user_id)
+VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c64a', '2021-04-03', 'Bandau irašyti pirmą komentarą',
+        '30ae6b63-1e7b-4c55-95f8-1356040908c6', '9f650ee7-da8c-430d-99e5-a771aa98c66a'),
+       ('9f650ee7-da8c-430d-99e5-a771aa98c65a', '2021-04-04', 'Bandau irašyti pirmą komentarą pakartotinai',
+        '30ae6b63-1e7b-4c55-95f8-1356040908c6', '1f650ee7-da8c-430d-99e5-a771aa98c99a');
+
 
 INSERT INTO ROLES (id, name)
 VALUES ('7a580a64-a414-40dc-8861-52aa79ff2257', 'USER'),
@@ -163,3 +165,7 @@ VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c66a', '7a580a64-a414-40dc-8861-52aa79f
        ('9f650ee7-da8c-430d-99e5-a771aa98c99a', '7a580a64-a414-40dc-8861-52aa79ff2257'),
        ('9f650ee7-da8c-430d-99e5-a771aa98c99a', '7a580a64-a414-40dc-8861-52aa79ff2258'),
        ('1f650ee7-da8c-430d-99e5-a771aa98c99a', '7a580a64-a414-40dc-8861-52aa79ff2257');
+
+-- INSERT INTO USER_COMMENTS (user_user_id, comments_comment_id)
+-- VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c66a', '9f650ee7-da8c-430d-99e5-a771aa98c64a'),
+--        ('1f650ee7-da8c-430d-99e5-a771aa98c99a', '9f650ee7-da8c-430d-99e5-a771aa98c65a');

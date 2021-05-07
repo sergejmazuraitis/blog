@@ -4,7 +4,7 @@
 <body>
 
 <div class="container mt-3">
-    <form method="post" th:object="${post}">
+    <form method="post" th:object="${post}" th:action="{/public/create}">
         <div class="mb-3">
             <label for="newName" class="form-label" th:text="#{create.new.name}"
                    th:class="${#fields.hasErrors('name')} ? error"></label>

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/layout :: head(title=#{post.title})"></head>
 <body>
 
@@ -18,12 +20,20 @@
                     <h5 class="card-title" th:text="${post.name}">Special title treatment</h5>
                     <p class="card-text" th:text="${post.content}">With supporting text below as a natural lead-in to
                         additional content.</p>
-                    <a th:href="@{/private/comments/create(id=${post.id})}" class="btn btn-primary"
+                    <a sec:authorize="isAuthenticated()"
+                       th:href="@{/public/comments/create(id=${post.id}, userId=${#authentication.principal.userId})}"
+                       class="btn btn-primary"
                        th:text="#{post.comment}"></a>
-                    <a th:href="@{/public/comments(id=${post.id})}" class="btn btn-primary" th:text="#{post.comment.read}"></a>
-                    <a th:href="@{/posts/update(id=${post.id})}" class="btn btn-primary"
+                    <a th:href="@{/public/comments(id=${post.id})}"
+                       class="btn btn-primary"
+                       th:text="#{post.comment.read}"></a>
+                    <a sec:authorize="hasRole('ADMIN')"
+                       th:href="@{/public/posts/update(id=${post.id})}"
+                       class="btn btn-primary"
                        th:text="#{post.change.post}"></a>
-                    <a th:href="@{/public/posts/delete(id=${post.id})}" class="btn btn-primary"
+                    <a sec:authorize="hasRole('ADMIN')"
+                       th:href="@{/public/posts/delete(id=${post.id})}"
+                       class="btn btn-primary"
                        th:text="#{post.delete.post}"></a>
                 </div>
             </div>

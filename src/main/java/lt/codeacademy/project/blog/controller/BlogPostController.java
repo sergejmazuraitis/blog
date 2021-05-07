@@ -46,12 +46,14 @@ public class BlogPostController {
     }
 
     @GetMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public String openCreateNewBlogPostForm(Model model) {
         model.addAttribute("post", new BlogPost());
         return "create";
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public String createNewBlogPost(@Valid @ModelAttribute("post") BlogPost blogPost, BindingResult errors) {
         if (errors.hasErrors()) {
             return "create";
@@ -64,12 +66,14 @@ public class BlogPostController {
     @GetMapping("/getPost")
     public String getPostById(@RequestParam UUID id, Model model) {
         BlogPost blogPostst = blogPostService.getBlogPostById(id);
+
         model.addAttribute("post", blogPostst);
         model.addAttribute("lastsPosts", blogPostService.findLastFivePost());
         return "post";
     }
 
     @GetMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateBlogPost(@RequestParam UUID id, Model model) {
         BlogPost blogPostst = blogPostService.getBlogPostById(id);
         model.addAttribute("post", blogPostst);
@@ -77,6 +81,7 @@ public class BlogPostController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateBlogPost(@Valid @ModelAttribute("post") BlogPost blogPost, BindingResult errors) {
         if (errors.hasErrors()) {
             return "create";

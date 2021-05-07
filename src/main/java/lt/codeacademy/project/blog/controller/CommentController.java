@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import lt.codeacademy.project.blog.model.Comment;
 import lt.codeacademy.project.blog.service.BlogPostService;
 import lt.codeacademy.project.blog.service.CommentService;
+import lt.codeacademy.project.blog.service.UserRegistryService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,19 +19,24 @@ import java.util.UUID;
 
 @Controller
 @Slf4j
+@RequestMapping("/public/comments")
 public class CommentController {
     private final CommentService commentService;
     private final BlogPostService blogPostService;
+    private final UserRegistryService userRegistryService;
 
-    public CommentController(CommentService commentService, BlogPostService blogPostService) {
+    public CommentController(CommentService commentService,
+                             BlogPostService blogPostService,
+                             UserRegistryService userRegistryService) {
         this.commentService = commentService;
         this.blogPostService = blogPostService;
+        this.userRegistryService = userRegistryService;
     }
 
-    @GetMapping("/public/comments")
+    @GetMapping
     public String getCommentsByBlogPostId(@RequestParam UUID id,
                                           Model model,
-                                          @PageableDefault(size = 1, sort = {"date"}, direction = Sort.Direction.ASC) Pageable pageable) {
+                                          @PageableDefault(size = 15, sort = {"date"}, direction = Sort.Direction.ASC) Pageable pageable) {
         model.addAttribute("comments", commentService.getCommentsByBlogPostId(id, pageable));
         model.addAttribute("lastsPosts", blogPostService.findLastFivePost());
         model.addAttribute("id", id);
@@ -37,15 +44,18 @@ public class CommentController {
         return "comments";
     }
 
-    @GetMapping("/private/comments/create")
-    public String openCreateNewCommentForm(@RequestParam UUID id, Model model) {
+    @GetMapping("/create")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
+    public String openCreateNewCommentForm(@RequestParam UUID id, @RequestParam UUID userId, Model model) {
         Comment comment = new Comment();
         comment.setBlogPost(blogPostService.getBlogPostById(id));
+        comment.setUser(userRegistryService.getUserById(userId));
         model.addAttribute("comment", comment);
         return "createcomment";
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
     public String createNewCommentForm(@Valid Comment comment, BindingResult errors) {
         if (errors.hasErrors()) {
             return "createcomment";
@@ -56,7 +66,8 @@ public class CommentController {
         return "redirect:/public/posts";
     }
 
-    @GetMapping("/private/comments/update")
+    @GetMapping("/update")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public String updateComment(@RequestParam UUID id, Model model) {
         Comment comment = commentService.getCommentById(id);
         model.addAttribute("comment", comment);
@@ -64,6 +75,7 @@ public class CommentController {
     }
 
     @PostMapping("/update")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public String updateComment(@Valid Comment comment, BindingResult errors) {
         if (errors.hasErrors()) {
             return "createcomment";
@@ -73,7 +85,8 @@ public class CommentController {
         return "redirect:/public/posts";
     }
 
-    @GetMapping("/private/comments/delete")
+    @GetMapping("/delete")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public String deleteComment(@RequestParam UUID id) {
         commentService.deleteComment(id);
         return "redirect:/public/posts";

@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/layout :: head(title=#{comments.creata})"></head>
 <body>
 
-<div class="container m-3">
-    <form method="post" th:object="${comment}">
+<div class="container mt-3">
+    <nav th:replace="fragments/layout :: navbar"></nav>
+    <form method="post" th:object="${comment}" th:action="${{#httpServletRequest.requestURI}}">
         <div class="mb-3">
             <input type="hidden" class="form-control" th:field="*{blogPost}">
         </div>
@@ -14,7 +17,7 @@
         </div>
 
         <div class="mb-3">
-            <input type="hidden" class="form-control" th:field="*{name}">
+            <input type="hidden" class="form-control" th:field="*{user}" >
         </div>
 
         <div class="mb-3">

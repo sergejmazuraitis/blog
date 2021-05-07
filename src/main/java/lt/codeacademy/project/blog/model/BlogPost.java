@@ -2,7 +2,6 @@ package lt.codeacademy.project.blog.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;

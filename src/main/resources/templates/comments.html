@@ -1,19 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/layout :: head(title=#{comments.comments})"></head>
 <body>
 <div class="container">
+    <nav th:replace="fragments/layout :: navbar"></nav>
     <div class="row">
         <div class="col-9">
             <div th:if="${not comments.hasContent()}"
                  th:insert="fragments/layout :: errorsCard(errorMessageText=#{comments.empty})"></div>
             <div th:if="${comments.hasContent()}" class="card mt-3">
-                <div class="card-body" th:each="comment: ${comments.content}">
-                    <h5 class="card-title" th:text="${comment.name}"></h5>
-                    <p class="card-text" th:text="${comment.content}"></p>
-                    <a th:href="@{/private/comments/update(id=${comment.commentId})}" class="btn btn-primary"
+                <div class="card-body"
+                     th:each="comment: ${comments.content}">
+                    <h5 class="card-title"
+                        th:text="${comment.user.username}"></h5>
+                    <p class="card-text"
+                       th:text="${comment.content}"></p>
+
+                    <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') or
+                       (#authorization.expression('hasRole(''ROLE_USER'')') and
+                       comment.user.userId eq #authentication.principal.userId) }"
+                       sec:authorize="isAuthenticated()"
+                       th:href="@{/public/comments/update(id=${comment.commentId})}"
+                       class="btn btn-primary"
                        th:text="#{comments.change}"></a>
-                    <a th:href="@{/private/comments/delete(id=${comment.commentId})}" class="btn btn-primary"
+                    <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') or
+                       (#authorization.expression('hasRole(''ROLE_USER'')') and
+                       comment.user.userId eq #authentication.principal.userId) }"
+                       sec:authorize="isAuthenticated()"
+                       th:href="@{/public/comments/delete(id=${comment.commentId})}"
+                       class="btn btn-primary"
                        th:text="#{comments.delete}"></a>
                     <hr>
                 </div>
@@ -22,10 +39,10 @@
             </div>
 
         </div>
-      <div class="col-3">
-        <h4 class="mt-3 text-center" th:text="#{posts.last.posts}"></h4>
-        <div th:insert="fragments/layout :: lastsPosts"></div>
-      </div>
+        <div class="col-3">
+            <h4 class="mt-3 text-center" th:text="#{posts.last.posts}"></h4>
+            <div th:insert="fragments/layout :: lastsPosts"></div>
+        </div>
 
     </div>
 </div>

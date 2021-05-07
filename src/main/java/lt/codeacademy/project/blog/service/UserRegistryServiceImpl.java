@@ -1,11 +1,15 @@
 package lt.codeacademy.project.blog.service;
 
+import lt.codeacademy.project.blog.exception.UserFoundException;
 import lt.codeacademy.project.blog.model.Role;
 import lt.codeacademy.project.blog.model.User;
 import lt.codeacademy.project.blog.repository.RoleRepository;
 import lt.codeacademy.project.blog.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserRegistryServiceImpl implements UserRegistryService{
@@ -30,5 +34,10 @@ public class UserRegistryServiceImpl implements UserRegistryService{
         Role role = roleRepository.findByName("USER").orElseThrow(NullPointerException::new);
         user.addRole(role);
         userRepository.save(user);
+    }
+
+    @Override
+    public User getUserById(UUID id) {
+        return userRepository.findById(id).orElseThrow(UserFoundException::new);
     }
 }
