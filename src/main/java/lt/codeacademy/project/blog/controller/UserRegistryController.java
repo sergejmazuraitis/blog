@@ -2,7 +2,6 @@ package lt.codeacademy.project.blog.controller;
 
 import lt.codeacademy.project.blog.model.User;
 import lt.codeacademy.project.blog.service.UserRegistryService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,23 +15,20 @@ import javax.validation.Valid;
 @RequestMapping("/public/register")
 public class UserRegistryController {
     private final UserRegistryService userRegistryService;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserRegistryController(UserRegistryService userRegistryService,
-                                  PasswordEncoder passwordEncoder) {
+    public UserRegistryController(UserRegistryService userRegistryService) {
         this.userRegistryService = userRegistryService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
-    public String openRegisterForm(Model model){
+    public String openRegisterForm(Model model) {
         model.addAttribute("user", new User());
         return "registration";
     }
 
     @PostMapping
-    public String registerNewUser(@Valid User user, BindingResult errors){
-        if (errors.hasErrors()){
+    public String registerNewUser(@Valid User user, BindingResult errors) {
+        if (errors.hasErrors()) {
             return "registration";
         }
         userRegistryService.addUser(user);

@@ -22,14 +22,18 @@
                        (#authorization.expression('hasRole(''ROLE_USER'')') and
                        comment.user.userId eq #authentication.principal.userId) }"
                        sec:authorize="isAuthenticated()"
-                       th:href="@{/public/comments/update(id=${comment.commentId})}"
+                       th:href="@{/public/comments/update(id=${comment.commentId},
+                        userId=${#authentication.principal.userId},
+                        role=${#authentication.principal.getRole})}"
                        class="btn btn-primary"
                        th:text="#{comments.change}"></a>
                     <a th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') or
                        (#authorization.expression('hasRole(''ROLE_USER'')') and
                        comment.user.userId eq #authentication.principal.userId) }"
                        sec:authorize="isAuthenticated()"
-                       th:href="@{/public/comments/delete(id=${comment.commentId})}"
+                       th:href="@{/public/comments/delete(id=${comment.commentId},
+                        userId=${#authentication.principal.userId},
+                        role=${#authentication.principal.getRole})}"
                        class="btn btn-primary"
                        th:text="#{comments.delete}"></a>
                     <hr>

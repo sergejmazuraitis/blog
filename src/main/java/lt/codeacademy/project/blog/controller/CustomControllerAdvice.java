@@ -30,7 +30,7 @@ public class CustomControllerAdvice {
     }
 
     @ExceptionHandler(UserFoundException.class)
-    public String userNotFound(){
+    public String userNotFound() {
         return "userNotFound";
     }
 }

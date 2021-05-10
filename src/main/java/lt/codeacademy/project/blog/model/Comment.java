@@ -2,7 +2,6 @@ package lt.codeacademy.project.blog.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -14,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "comments")
+@Table(name = "Comments")
 public class Comment {
 
     @Id
@@ -22,12 +21,6 @@ public class Comment {
     @Column(columnDefinition = "VARCHAR(36)", updatable = false)
     @Type(type = "uuid-char")
     private UUID commentId;
-
-//    @NotNull
-//    @Size(min = 3,
-//            max = 50,
-//            message = "{validation.size.name}")
-//    private String name;
 
     private Date date = new Date();
 
@@ -37,8 +30,6 @@ public class Comment {
             message = "{validation.size.name}")
     private String content;
 
-//    @Type(type = "uuid-char")
-//    private UUID blogPostId;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "blogPost_id", nullable = false)
     private BlogPost blogPost;

@@ -1,5 +1,6 @@
 package lt.codeacademy.project.blog.service;
 
+import lombok.extern.slf4j.Slf4j;
 import lt.codeacademy.project.blog.exception.CommentFoundException;
 import lt.codeacademy.project.blog.model.Comment;
 import lt.codeacademy.project.blog.repository.CommentRepository;
@@ -7,10 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
@@ -20,7 +21,11 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void addComment(Comment comment) {
-        commentRepository.save(comment);
+        try {
+            commentRepository.save(comment);
+        } catch (IllegalArgumentException e) {
+            log.error("Cannot create Comment {}", comment);
+        }
     }
 
     @Override
@@ -29,13 +34,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Page<Comment> getAllCommentsWithPages(Pageable pageable) {
-        return commentRepository.findAll(pageable);
-    }
-
-    @Override
     public void updateComment(Comment comment) {
-        commentRepository.save(comment);
+        try {
+            commentRepository.save(comment);
+        } catch (IllegalArgumentException e) {
+            log.error("Cannot create Comment {}", comment);
+        }
     }
 
     @Override
@@ -45,6 +49,18 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Page<Comment> getCommentsByBlogPostId(UUID id, Pageable pageable) {
-        return commentRepository.getCommentsByBlogPostId(id ,pageable);
+        return commentRepository.getCommentsByBlogPostId(id, pageable);
+    }
+
+    @Override
+    public boolean validateIsUserComment(UUID id, UUID userId, String role) {
+        Comment comment = commentRepository.findById(id).orElseThrow(CommentFoundException::new);
+
+        if (userId == null || role == null) {
+            return false;
+        } else if (role.equals("ADMIN")) {
+            return true;
+        }
+        return comment.getUser().getUserId().equals(userId);
     }
 }

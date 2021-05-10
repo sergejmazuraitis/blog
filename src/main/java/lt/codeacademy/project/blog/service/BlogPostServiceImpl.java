@@ -9,12 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -25,16 +20,11 @@ public class BlogPostServiceImpl implements BlogPostService {
         this.blogPostRepository = blogPostRepository;
     }
 
-    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
-        Set<Object> seen = ConcurrentHashMap.newKeySet();
-        return t -> seen.add(keyExtractor.apply(t));
-    }
-
     @Override
     public void addBlogPost(BlogPost blogPost) {
         try {
             blogPostRepository.save(blogPost);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             log.error("Cannot create BlogPost {}", blogPost);
         }
     }
@@ -42,11 +32,6 @@ public class BlogPostServiceImpl implements BlogPostService {
     @Override
     public BlogPost getBlogPostById(UUID id) {
         return blogPostRepository.findById(id).orElseThrow(BlogPostFoundException::new);
-    }
-
-    @Override
-    public BlogPost getBlogPostByName(String name) {
-        return blogPostRepository.findByName(name).get(0);
     }
 
     @Override
@@ -59,7 +44,7 @@ public class BlogPostServiceImpl implements BlogPostService {
 
         try {
             blogPostRepository.save(blogPost);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             log.error("Cannot create BlogPost {}", blogPost);
         }
     }
@@ -77,7 +62,6 @@ public class BlogPostServiceImpl implements BlogPostService {
     @Override
     public List<String> findAllDistinctCategories() {
         List<String> blogPosts = blogPostRepository.getDistinctCategoriesNative();
-//        return blogPosts.stream().filter(distinctByKey(BlogPost::getCategory)).collect(Collectors.toList());
         return blogPosts;
     }
 

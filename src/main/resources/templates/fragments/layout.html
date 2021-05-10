@@ -28,6 +28,7 @@
 
 
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
                 <li class="nav-item">
                     <a sec:authorize="hasRole('ADMIN')"
                        class="nav-link"
@@ -43,7 +44,7 @@
                     <a class="nav-link" th:href="@{/logout}" th:text="#{posts.signout}"></a>
                 </li>
 
-                <li class="nav-item">
+                <li sec:authorize="!isAuthenticated()" class="nav-item">
                     <a class="nav-link" th:href="@{/public/register}" th:text="#{posts.register}"></a>
                 </li>
 
@@ -58,11 +59,18 @@
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
        data-bs-toggle="dropdown" aria-expanded="false" th:text="#{lang.lang}">
     </a>
-    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" th:href="${{#httpServletRequest.requestURI}} + '?lang=UK'"
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+    th:with="link=${#httpServletRequest.requestURI + '?' + #request.queryString}">
+        <li><a th:if="${#request.queryString} ne null" class="dropdown-item" th:href="@{${link} + '&lang=UK'}"
                th:text="#{lang.en}"></a></li>
-        <li><a class="dropdown-item" th:href="${{#httpServletRequest.requestURI}} + '?lang=LTU'"
+        <li><a th:if="${#request.queryString} eq null" class="dropdown-item" th:href="${{#httpServletRequest.requestURI}} + '?lang=UK'"
+               th:text="#{lang.en}"></a></li>
+        <li><a th:if="${#request.queryString} ne null" class="dropdown-item" th:href="@{${link} + '&lang=LTU'}"
                th:text="#{lang.lt}"></a></li>
+        <li><a th:if="${#request.queryString} eq null" class="dropdown-item" th:href="${{#httpServletRequest.requestURI}} + '?lang=LTU'"
+               th:text="#{lang.lt}"></a></li>
+
+
     </ul>
 </li>
 
@@ -236,6 +244,4 @@
         </div>
     </div>
 </div>
-
-
 </html>

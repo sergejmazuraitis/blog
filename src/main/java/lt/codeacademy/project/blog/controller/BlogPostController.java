@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.stereotype.Controller;
@@ -27,13 +26,6 @@ public class BlogPostController {
 
     public BlogPostController(@Qualifier("blogPostServiceImpl") BlogPostService blogPostService) {
         this.blogPostService = blogPostService;
-    }
-
-    @GetMapping("/findByName")
-    public String getBlogPostByName(@RequestParam String name, Model model) {
-
-        model.addAttribute("post", blogPostService.getBlogPostByName(name));
-        return "post";
     }
 
     @GetMapping

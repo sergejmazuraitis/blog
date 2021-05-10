@@ -12,7 +12,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -36,7 +39,8 @@ public class CommentController {
     @GetMapping
     public String getCommentsByBlogPostId(@RequestParam UUID id,
                                           Model model,
-                                          @PageableDefault(size = 15, sort = {"date"}, direction = Sort.Direction.ASC) Pageable pageable) {
+                                          @PageableDefault(size = 15, sort = {"date"},
+                                                  direction = Sort.Direction.ASC) Pageable pageable) {
         model.addAttribute("comments", commentService.getCommentsByBlogPostId(id, pageable));
         model.addAttribute("lastsPosts", blogPostService.findLastFivePost());
         model.addAttribute("id", id);
@@ -45,8 +49,10 @@ public class CommentController {
     }
 
     @GetMapping("/create")
-    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
-    public String openCreateNewCommentForm(@RequestParam UUID id, @RequestParam UUID userId, Model model) {
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public String openCreateNewCommentForm(@RequestParam UUID id,
+                                           @RequestParam UUID userId,
+                                           Model model) {
         Comment comment = new Comment();
         comment.setBlogPost(blogPostService.getBlogPostById(id));
         comment.setUser(userRegistryService.getUserById(userId));
@@ -55,8 +61,9 @@ public class CommentController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN') || hasRole('USER')")
-    public String createNewCommentForm(@Valid Comment comment, BindingResult errors) {
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    public String createNewCommentForm(@Valid Comment comment,
+                                       BindingResult errors) {
         if (errors.hasErrors()) {
             return "createcomment";
         }
@@ -68,7 +75,14 @@ public class CommentController {
 
     @GetMapping("/update")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public String updateComment(@RequestParam UUID id, Model model) {
+    public String updateComment(@RequestParam UUID id,
+                                @RequestParam UUID userId,
+                                @RequestParam String role,
+                                Model model) {
+
+        if (!commentService.validateIsUserComment(id, userId, role)) {
+            return "/public/posts";
+        }
         Comment comment = commentService.getCommentById(id);
         model.addAttribute("comment", comment);
         return "createcomment";
@@ -76,7 +90,8 @@ public class CommentController {
 
     @PostMapping("/update")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public String updateComment(@Valid Comment comment, BindingResult errors) {
+    public String updateComment(@Valid Comment comment,
+                                BindingResult errors) {
         if (errors.hasErrors()) {
             return "createcomment";
         }
@@ -87,7 +102,12 @@ public class CommentController {
 
     @GetMapping("/delete")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public String deleteComment(@RequestParam UUID id) {
+    public String deleteComment(@RequestParam UUID id,
+                                @RequestParam UUID userId,
+                                @RequestParam String role) {
+        if (!commentService.validateIsUserComment(id, userId, role)) {
+            return "/public/posts";
+        }
         commentService.deleteComment(id);
         return "redirect:/public/posts";
     }

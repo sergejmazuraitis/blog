@@ -10,11 +10,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface BlogPostRepository extends JpaRepository<BlogPost, UUID> {
-    List<BlogPost> findByName(String name);
     List<BlogPost> findFirst5ByOrderByDateDesc();
-    List<BlogPost> getDistinctByCategoryNotNullOrderByCategoryAsc();
 
-    @Query(value = "SELECT DISTINCT CATEGORY FROM BLOGPOST", nativeQuery = true )
+    @Query("SELECT DISTINCT b.category FROM BlogPost b")
     List<String> getDistinctCategoriesNative();
 
     Page<BlogPost> findBlogPostsByCategory(String category, Pageable pageable);

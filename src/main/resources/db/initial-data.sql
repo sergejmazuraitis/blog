@@ -162,10 +162,5 @@ VALUES ('7a580a64-a414-40dc-8861-52aa79ff2257', 'USER'),
 
 INSERT INTO USER_ROLES (user_user_id, roles_id)
 VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c66a', '7a580a64-a414-40dc-8861-52aa79ff2257'),
-       ('9f650ee7-da8c-430d-99e5-a771aa98c99a', '7a580a64-a414-40dc-8861-52aa79ff2257'),
        ('9f650ee7-da8c-430d-99e5-a771aa98c99a', '7a580a64-a414-40dc-8861-52aa79ff2258'),
        ('1f650ee7-da8c-430d-99e5-a771aa98c99a', '7a580a64-a414-40dc-8861-52aa79ff2257');
-
--- INSERT INTO USER_COMMENTS (user_user_id, comments_comment_id)
--- VALUES ('9f650ee7-da8c-430d-99e5-a771aa98c66a', '9f650ee7-da8c-430d-99e5-a771aa98c64a'),
---        ('1f650ee7-da8c-430d-99e5-a771aa98c99a', '9f650ee7-da8c-430d-99e5-a771aa98c65a');

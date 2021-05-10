@@ -12,8 +12,6 @@ public interface BlogPostService {
 
     BlogPost getBlogPostById(UUID id);
 
-    BlogPost getBlogPostByName(String name);
-
     Page<BlogPost> getAllBlogPostsWithPages(Pageable pageable);
 
     void updateBlogPost(BlogPost post);

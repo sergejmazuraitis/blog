@@ -17,9 +17,8 @@
                     <h5 th:text="${post.category}"></h5>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${post.name}">Special title treatment</h5>
-                    <p class="card-text" th:text="${post.content}">With supporting text below as a natural lead-in to
-                        additional content.</p>
+                    <h5 class="card-title" th:text="${post.name}"></h5>
+                    <p class="card-text" th:text="${post.content}"></p>
                     <a sec:authorize="isAuthenticated()"
                        th:href="@{/public/comments/create(id=${post.id}, userId=${#authentication.principal.userId})}"
                        class="btn btn-primary"

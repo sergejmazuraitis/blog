@@ -3,6 +3,7 @@ package lt.codeacademy.project.blog.model;
 import lombok.Getter;
 import lombok.Setter;
 import lt.codeacademy.project.blog.validator.annotation.Password;
+import lt.codeacademy.project.blog.validator.annotation.PhoneNumber;
 import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,6 @@ import java.util.*;
 @Setter
 @Password
 @Entity
-@Table(name = "user")
 public class User implements UserDetails {
 
     @Id
@@ -40,7 +40,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String username;
 
-    // TODO: 2021-04-23 only digits and +
+    @PhoneNumber(message = "{validation.phone}")
     @NotNull
     private String phone;
 
@@ -96,6 +96,10 @@ public class User implements UserDetails {
 
     public void addRole(Role role) {
         roles.add(role);
+    }
+
+    public String getRole() {
+        return roles.iterator().next().getName();
     }
 }
 
